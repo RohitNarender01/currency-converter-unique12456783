@@ -1,0 +1,106 @@
+==
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            width: 100%;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+        </div>
+        <div class="input-group">
+            <label for="fromCurrency">From</label>
+            <select id="fromCurrency">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="INR">INR</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="toCurrency">To</label>
+            <select id="toCurrency">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="INR">INR</option>
+            </select>
+        </div>
+        <button onclick="convert()">Convert</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        const mockConversionRates = {
+            USD: {EUR: 0.85, INR: 75},
+            EUR: {USD: 1.18, INR: 88},
+            INR: {USD: 0.013, EUR: 0.011}
+        };
+
+        function convert() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const resultDiv = document.getElementById('result');
+
+            if (isNaN(amount)) {
+                resultDiv.textContent = 'Please enter a valid amount.';
+                return;
+            }
+
+            if (fromCurrency === toCurrency) {
+                resultDiv.textContent = `Converted Amount: ${amount.toFixed(2)} ${toCurrency}`;
+                return;
+            }
+
+            const conversionRate = mockConversionRates[fromCurrency][toCurrency];
+            const convertedAmount = amount * conversionRate;
+            resultDiv.textContent = `Converted Amount: ${convertedAmount.toFixed(2)} ${toCurrency}`;
+        }
+    </script>
+</body>
+</html>
+```
